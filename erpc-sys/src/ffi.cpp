@@ -138,7 +138,7 @@ void erpc_enqueue_response(erpc::Rpc<erpc::CTransport> *rpc,
                            size_t data_size) {
   auto &resp = req_handle->pre_resp_msgbuf_;
   rpc->resize_msg_buffer(&resp, data_size);
-  memcpy(resp.buf, data, data_size);
+  memcpy(resp.buf_, data, data_size);
 
   rpc->enqueue_response(req_handle, &resp);
 }
