@@ -15,7 +15,7 @@ void client_cont_func(void *_c, void *_tag) {
   printf("client_cont_func start\n");
   auto tag = reinterpret_cast<size_t>(_tag);
   auto *c = static_cast<AppContext *>(_c);
-  std::string s((const char *)c->resp.buf, c->resp.get_data_size());
+  std::string s((const char *)c->resp.buf_, c->resp.get_data_size());
   printf("tag: %zu %s\n", tag, s.c_str());
   printf("client_cont_func end\n");
 }
@@ -49,7 +49,7 @@ void send_q(AppContext *c) {
   c->req = c->rpc->alloc_msg_buffer_or_die(kReqMsgSize);
   c->resp = c->rpc->alloc_msg_buffer_or_die(kMsgSize);
 
-  sprintf(reinterpret_cast<char *>(c->req.buf), "%s", "hello");
+  sprintf(reinterpret_cast<char *>(c->req.buf_), "%s", "hello");
 
   c->rpc->enqueue_request(c->session_num, kReqType, &c->req, &c->resp,
                           client_cont_func, nullptr);
